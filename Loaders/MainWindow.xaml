@@ -1,0 +1,56 @@
+﻿<Window x:Class="Loaders.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Loaders"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+
+        <StackPanel Margin="20">
+
+            <Grid x:Name="WrapperGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Column="0" Grid.Row="0">
+                    Thickness : <Run Text="{Binding Value,StringFormat='P2', ElementName=ThicknessSlider}" />
+                </TextBlock>
+                <Slider x:Name="ThicknessSlider" 
+                        Grid.Row="0" Grid.Column="1"
+                        Minimum="0" Maximum="1"
+                        Value="0.25" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0">
+                    Size : <Run Text="{Binding Value, StringFormat='F0', ElementName=SizeSlider}" />
+                </TextBlock>
+                <Slider Grid.Row="1" Grid.Column="1" x:Name="SizeSlider"
+                        Minimum="0" Maximum="{Binding ActualWidth, ElementName=WrapperGrid}" Value="200" />
+            </Grid>
+
+
+            <local:ChromeLoader Height="{Binding Value, ElementName=SizeSlider}"
+                                Width="{Binding Value, ElementName=SizeSlider}"
+                                Thickness="{Binding Value, ElementName=ThicknessSlider}"
+                                x:Name="Loader"
+                                Margin="20"
+                                Brush="Red"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+            </local:ChromeLoader>
+
+        </StackPanel>
+        
+        
+
+    </Grid>
+</Window>
