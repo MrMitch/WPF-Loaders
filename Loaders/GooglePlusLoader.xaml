@@ -46,8 +46,7 @@
         <Grid.Triggers>
             <EventTrigger RoutedEvent="Grid.Loaded">
                 <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever"
-                                SpeedRatio="{Binding SpeedRatio, ElementName=RootUserControl}">
+                    <Storyboard RepeatBehavior="Forever">
                         <!-- 1. change the positions -->
                         <DoubleAnimation BeginTime="0:0:0"
                                          Duration="0:0:0"

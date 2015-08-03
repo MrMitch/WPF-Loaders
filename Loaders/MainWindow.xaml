@@ -111,24 +111,14 @@
                         Minimum="1" Maximum="{Binding ActualWidth, ElementName=GooglePlusSettingsGrid}"
                         TickFrequency="0.2"
                         Value="50" />
-
-                <TextBlock Grid.Column="0" Grid.Row="1">
-                    Speed : <Run Text="{Binding Value, StringFormat='F1', ElementName=GooglePlusSpeedSlider}" />
-                </TextBlock>
-                <Slider x:Name="GooglePlusSpeedSlider" 
-                        Grid.Row="1" Grid.Column="1"
-                        Minimum="0.00001" Maximum="10"
-                        TickFrequency="0.2"
-                        Value="1">
-                </Slider>
             </Grid>
 
             <Border Background="#e5e5e5"
                     Margin="10"
                     Padding="20">
-                <local:GooglePlusLoader Height="{Binding Value, ElementName=GooglePlusSizeSlider}"
-                                        Width="{Binding Value, ElementName=GooglePlusSizeSlider}"
-                                        SpeedRatio="{Binding Value, ElementName=GooglePlusSpeedSlider}"/>
+                <local:GooglePlusLoader x:Name="GooglePlusLoader" 
+                                        Height="{Binding Value, ElementName=GooglePlusSizeSlider}"
+                                        Width="{Binding Value, ElementName=GooglePlusSizeSlider}" />
             </Border>
 
         </StackPanel>

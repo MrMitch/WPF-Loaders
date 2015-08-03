@@ -71,28 +71,6 @@ namespace Loaders
         } 
         #endregion
 
-        #region SpeedRatio
-        public static readonly DependencyProperty SpeedRatioProperty = DependencyProperty.Register(
-            "SpeedRatio",
-            typeof(double),
-            typeof(GooglePlusLoader),
-            new PropertyMetadata(1d)
-        );
-
-        public double SpeedRatio
-        {
-            get { return (double)GetValue(SpeedRatioProperty); }
-            set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException("SpeedRatio must be greater than 0", nameof(value));
-                }
-                SetValue(SpeedRatioProperty, value);
-            }
-        }
-        #endregion
-
         public GooglePlusLoader()
         {
             InitializeComponent();
