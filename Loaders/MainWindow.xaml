@@ -91,9 +91,9 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Column="0" Grid.Row="0">
-                    Rings thickness : <Run Text="{Binding Value,StringFormat='F0', ElementName=GooglePlusRingsThicknessSlider}" />
+                    Size : <Run Text="{Binding Value,StringFormat='F0', ElementName=GooglePlusRingsSizeSlider}" />
                 </TextBlock>
-                <Slider x:Name="GooglePlusRingsThicknessSlider" 
+                <Slider x:Name="GooglePlusRingsSizeSlider" 
                         Grid.Row="0" Grid.Column="1"
                         Minimum="1" Maximum="{Binding ActualWidth, ElementName=GooglePlusSettingsGrid}"
                         TickFrequency="0.2"
@@ -103,8 +103,8 @@
             <Border Background="#e5e5e5"
                     Margin="10"
                     Padding="20">
-                <local:GooglePlus Height="{Binding Value, ElementName=GooglePlusRingsThicknessSlider}"
-                                  Width="{Binding Value, ElementName=GooglePlusRingsThicknessSlider}" />
+                <local:GooglePlus Height="{Binding Value, ElementName=GooglePlusRingsSizeSlider}"
+                                  Width="{Binding Value, ElementName=GooglePlusRingsSizeSlider}" />
             </Border>
 
         </StackPanel>
