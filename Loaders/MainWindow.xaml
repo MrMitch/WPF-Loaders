@@ -4,12 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Loaders"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Loaders" 
-        Height="650" Width="525">
-    <ScrollViewer>
+        Height="800" Width="800">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-        <StackPanel Margin="20">
+        <StackPanel Margin="20,-10,20,20">
+            <StackPanel.Resources>
+                <Style x:Key="HeaderTextBlockStyle" TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="FontWeight" Value="Light" />
+                    <Setter Property="Margin" Value="0,20,0,10" />
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock Text="Google Chrome tab loader" Style="{StaticResource HeaderTextBlockStyle}" />
 
             <Grid x:Name="ChromeSettingsGrid">
                 <Grid.ColumnDefinitions>
@@ -48,6 +57,8 @@
                                 Margin="20"
                                 Brush="#007acc"/>
 
+
+            <TextBlock Text="Imgur image loader" Style="{StaticResource HeaderTextBlockStyle}" />
             <Grid x:Name="ImgurSettingsGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -78,6 +89,8 @@
 
             </Border>
 
+
+            <TextBlock Text="Google+ profile loader" Style="{StaticResource HeaderTextBlockStyle}" />
             <Grid x:Name="GooglePlusSettingsGrid">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -91,20 +104,31 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Column="0" Grid.Row="0">
-                    Size : <Run Text="{Binding Value,StringFormat='F0', ElementName=GooglePlusRingsSizeSlider}" />
+                    Size : <Run Text="{Binding Value,StringFormat='F0', ElementName=GooglePlusSizeSlider}" />
                 </TextBlock>
-                <Slider x:Name="GooglePlusRingsSizeSlider" 
+                <Slider x:Name="GooglePlusSizeSlider" 
                         Grid.Row="0" Grid.Column="1"
                         Minimum="1" Maximum="{Binding ActualWidth, ElementName=GooglePlusSettingsGrid}"
                         TickFrequency="0.2"
                         Value="50" />
+
+                <TextBlock Grid.Column="0" Grid.Row="1">
+                    Speed : <Run Text="{Binding Value, StringFormat='F1', ElementName=GooglePlusSpeedSlider}" />
+                </TextBlock>
+                <Slider x:Name="GooglePlusSpeedSlider" 
+                        Grid.Row="1" Grid.Column="1"
+                        Minimum="0.00001" Maximum="10"
+                        TickFrequency="0.2"
+                        Value="1">
+                </Slider>
             </Grid>
 
             <Border Background="#e5e5e5"
                     Margin="10"
                     Padding="20">
-                <local:GooglePlus Height="{Binding Value, ElementName=GooglePlusRingsSizeSlider}"
-                                  Width="{Binding Value, ElementName=GooglePlusRingsSizeSlider}" />
+                <local:GooglePlusLoader Height="{Binding Value, ElementName=GooglePlusSizeSlider}"
+                                        Width="{Binding Value, ElementName=GooglePlusSizeSlider}"
+                                        SpeedRatio="{Binding Value, ElementName=GooglePlusSpeedSlider}"/>
             </Border>
 
         </StackPanel>

@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="Loaders.GooglePlus"
+﻿<UserControl x:Class="Loaders.GooglePlusLoader"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Loaders"
              xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
+             xmlns:converters="clr-namespace:Loaders.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              x:Name="RootUserControl">
@@ -31,6 +32,9 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <converters:ColorNuanceConverter x:Key="DarkerColorConverter" Nuance="-32" />
+            <converters:ColorNuanceConverter x:Key="LighterColorConverter" Nuance="32" />
         </Grid.Resources>
         
         <ed:Arc x:Name="HiddenArc"/>
@@ -42,7 +46,8 @@
         <Grid.Triggers>
             <EventTrigger RoutedEvent="Grid.Loaded">
                 <BeginStoryboard>
-                    <Storyboard RepeatBehavior="Forever">
+                    <Storyboard RepeatBehavior="Forever"
+                                SpeedRatio="{Binding SpeedRatio, ElementName=RootUserControl}">
                         <!-- 1. change the positions -->
                         <DoubleAnimation BeginTime="0:0:0"
                                          Duration="0:0:0"
@@ -77,12 +82,7 @@
                                          Storyboard.TargetProperty="EndAngle"
                                          To="270"/>
 
-                         <!--1. change the colors--> 
-                        <ColorAnimation BeginTime="0:0:0"
-                                        Duration="0:0:0"
-                                        Storyboard.TargetName="MovingArc"
-                                        Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color1, ElementName=RootUserControl}"/>
+                         <!-- 1. change the colors--> 
                         <ColorAnimation BeginTime="0:0:0"
                                         Duration="0:0:0"
                                         Storyboard.TargetName="HiddenArc"
@@ -94,30 +94,38 @@
                                         Storyboard.TargetProperty="Fill.Color"
                                         To="{Binding Color1, ElementName=RootUserControl}"/>
 
-                         <!--1. rotate to half--> 
+                         <!-- 1. rotate to half-->
                         <DoubleAnimation BeginTime="0:0:0"
                                          Duration="0:0:0.3"
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleY"
                                          To="0"/>
-                        <ColorAnimation BeginTime="0:0:0.3"
-                                        Duration="0:0:0"
+                        <ColorAnimation BeginTime="0:0:0"
+                                        Duration="0:0:0.3"
                                         Storyboard.TargetName="MovingArc"
                                         Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color2, ElementName=RootUserControl}"/>
+                                        From="{Binding Color1, ElementName=RootUserControl}"
+                                        To="{Binding Color1, ElementName=RootUserControl, Converter={StaticResource DarkerColorConverter}}"/>
 
-                         <!--1. rotate to the end--> 
+                        <!-- 1. rotate to the end--> 
                         <DoubleAnimation BeginTime="0:0:0.3"
                                          Duration="0:0:0.3"
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleY"
                                          To="-1"/>
+                        <ColorAnimation BeginTime="0:0:0.3"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="MovingArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color2, ElementName=RootUserControl, Converter={StaticResource LighterColorConverter}}"
+                                        To="{Binding Color2, ElementName=RootUserControl}"/>
+                        <ColorAnimation BeginTime="0:0:0.3"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="VisibleArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        To="{Binding Color1, ElementName=RootUserControl, Converter={StaticResource DarkerColorConverter}}"/>
 
-
-
-
-
-
+                        <!-- - - - - - - - - - - - - - - - - - - - -->
                         <!-- 2. change the positions -->
                         <DoubleAnimation BeginTime="0:0:0.6"
                                          Duration="0:0:0"
@@ -152,7 +160,7 @@
                                          Storyboard.TargetProperty="EndAngle"
                                          To="360"/>
 
-                        <!-- 2. change the colors j:ffd64a r:de4a42 -->
+                        <!-- 2. change the colors -->
                         <ColorAnimation BeginTime="0:0:0.6"
                                         Duration="0:0:0"
                                         Storyboard.TargetName="HiddenArc"
@@ -163,11 +171,6 @@
                                         Storyboard.TargetName="VisibleArc"
                                         Storyboard.TargetProperty="Fill.Color"
                                         To="{Binding Color2, ElementName=RootUserControl}"/>
-                        <ColorAnimation BeginTime="0:0:0.6"
-                                        Duration="0:0:0"
-                                        Storyboard.TargetName="MovingArc"
-                                        Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color2, ElementName=RootUserControl}"/>
 
                         <!-- 2. rotate to half -->
                         <DoubleAnimation BeginTime="0:0:0.6"
@@ -175,11 +178,12 @@
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleX"
                                          To="0"/>
-                        <ColorAnimation BeginTime="0:0:0.9"
-                                        Duration="0:0:0"
+                        <ColorAnimation BeginTime="0:0:0.6"
+                                        Duration="0:0:0.3"
                                         Storyboard.TargetName="MovingArc"
                                         Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color3, ElementName=RootUserControl}"/>
+                                        From="{Binding Color2, ElementName=RootUserControl}"
+                                        To="{Binding Color2, ElementName=RootUserControl, Converter={StaticResource LighterColorConverter}}"/>
 
                         <!-- 2. rotate to the end -->
                         <DoubleAnimation BeginTime="0:0:0.9"
@@ -187,9 +191,19 @@
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleX"
                                          To="-1"/>
+                        <ColorAnimation BeginTime="0:0:0.9"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="MovingArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color3, ElementName=RootUserControl, Converter={StaticResource LighterColorConverter}}"
+                                        To="{Binding Color3, ElementName=RootUserControl}"/>
+                        <ColorAnimation BeginTime="0:0:0.9"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="VisibleArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        To="{Binding Color2, ElementName=RootUserControl, Converter={StaticResource DarkerColorConverter}}"/>
 
-
-
+                        <!-- - - - - - - - - - - - - - - - - - - - -->
                         <!-- 3. change the positions -->
                         <DoubleAnimation BeginTime="0:0:1.2"
                                          Duration="0:0:0"
@@ -229,20 +243,10 @@
                                          Storyboard.TargetProperty="EndAngle"
                                          To="90"/>
 
-                        <!-- 3. change the colors j:ffd64a r:de4a42 -->
-                        <ColorAnimation BeginTime="0:0:1.2"
-                                        Duration="0:0:0"
-                                        Storyboard.TargetName="HiddenArc"
-                                        Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color4, ElementName=RootUserControl}"/> 
+                        <!-- 3. change the colors -->
                         <ColorAnimation BeginTime="0:0:1.2"
                                         Duration="0:0:0"
                                         Storyboard.TargetName="VisibleArc"
-                                        Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color3, ElementName=RootUserControl}"/>
-                        <ColorAnimation BeginTime="0:0:1.2"
-                                        Duration="0:0:0"
-                                        Storyboard.TargetName="MovingArc"
                                         Storyboard.TargetProperty="Fill.Color"
                                         To="{Binding Color3, ElementName=RootUserControl}"/>
 
@@ -252,10 +256,17 @@
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleY"
                                          To="0"/>
-                        <ColorAnimation BeginTime="0:0:1.5"
-                                        Duration="0:0:0"
+                        <ColorAnimation BeginTime="0:0:1.2"
+                                        Duration="0:0:0.3"
                                         Storyboard.TargetName="MovingArc"
                                         Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color3, ElementName=RootUserControl}"
+                                        To="{Binding Color3, ElementName=RootUserControl, Converter={StaticResource LighterColorConverter}}"/>
+                        <ColorAnimation BeginTime="0:0:1.2"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="HiddenArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color4, ElementName=RootUserControl, Converter={StaticResource DarkerColorConverter}}"
                                         To="{Binding Color4, ElementName=RootUserControl}"/>
 
                         <!-- 3. rotate to the end -->
@@ -264,17 +275,15 @@
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleY"
                                          To="-1"/>
+                        <ColorAnimation BeginTime="0:0:1.5"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="MovingArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color4, ElementName=RootUserControl, Converter={StaticResource DarkerColorConverter}}"
+                                        To="{Binding Color4, ElementName=RootUserControl}"/>
 
-
-
-
-
-
-                        
-                        
-                        
-
-                        <!-- 3. change the positions -->
+                        <!-- - - - - - - - - - - - - - - - - - - - -->
+                        <!-- 4. change the positions -->
                         <DoubleAnimation BeginTime="0:0:1.8"
                                          Duration="0:0:0"
                                          Storyboard.TargetName="HiddenArc"
@@ -313,7 +322,7 @@
                                          Storyboard.TargetProperty="EndAngle"
                                          To="180"/>
 
-                        <!-- 3. change the colors j:ffd64a r:de4a42 -->
+                        <!-- 4. change the colors -->
                         <ColorAnimation BeginTime="0:0:1.8"
                                         Duration="0:0:0"
                                         Storyboard.TargetName="HiddenArc"
@@ -324,30 +333,39 @@
                                         Storyboard.TargetName="VisibleArc"
                                         Storyboard.TargetProperty="Fill.Color"
                                         To="{Binding Color4, ElementName=RootUserControl}"/>
-                        <ColorAnimation BeginTime="0:0:1.8"
-                                        Duration="0:0:0"
-                                        Storyboard.TargetName="MovingArc"
-                                        Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color4, ElementName=RootUserControl}"/>
 
-                        <!-- 3. rotate to half -->
+                        <!-- 4. rotate to half -->
                         <DoubleAnimation BeginTime="0:0:1.8"
                                          Duration="0:0:0.3"
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleX"
                                          To="0"/>
-                        <ColorAnimation BeginTime="0:0:2.1"
-                                        Duration="0:0:0"
+                        <ColorAnimation BeginTime="0:0:1.8"
+                                        Duration="0:0:0.3"
                                         Storyboard.TargetName="MovingArc"
                                         Storyboard.TargetProperty="Fill.Color"
-                                        To="{Binding Color1, ElementName=RootUserControl}"/>
+                                        From="{Binding Color4, ElementName=RootUserControl}"
+                                        To="{Binding Color4, ElementName=RootUserControl, Converter={StaticResource LighterColorConverter}}"/>
 
-                        <!-- 3. rotate to the end -->
+                        <!-- 4. rotate to the end -->
                         <DoubleAnimation BeginTime="0:0:2.1"
                                          Duration="0:0:0.3"
                                          Storyboard.TargetName="MovingArc"
                                          Storyboard.TargetProperty="RenderTransform.ScaleX"
                                          To="-1"/>
+                        <ColorAnimation BeginTime="0:0:2.1"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="MovingArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color1, ElementName=RootUserControl, Converter={StaticResource LighterColorConverter}}"
+                                        To="{Binding Color1, ElementName=RootUserControl}"/>
+                        <ColorAnimation BeginTime="0:0:2.1"
+                                        Duration="0:0:0.3"
+                                        Storyboard.TargetName="VisibleArc"
+                                        Storyboard.TargetProperty="Fill.Color"
+                                        From="{Binding Color4, ElementName=RootUserControl}"
+                                        To="{Binding Color4, ElementName=RootUserControl, Converter={StaticResource DarkerColorConverter}}"/>
+
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
