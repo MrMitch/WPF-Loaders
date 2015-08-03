@@ -60,6 +60,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GooglePlus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImgurLoader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -76,6 +80,9 @@
       <DependentUpon>ChromeLoader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\LinearConverter.cs" />
+    <Compile Include="GooglePlus.xaml.cs">
+      <DependentUpon>GooglePlus.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImgurLoader.xaml.cs">
       <DependentUpon>ImgurLoader.xaml</DependentUpon>
     </Compile>
