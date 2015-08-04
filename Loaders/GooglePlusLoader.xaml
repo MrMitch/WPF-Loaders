@@ -33,7 +33,7 @@
             </Setter>
         </Style>
         
-        <converters:ColorNuanceConverter x:Key="DarkerColorConverter" Nuance="-32" />
+        <converters:ColorNuanceConverter x:Key="DarkerColorConverter" Nuance="-5" />
         <converters:ColorNuanceConverter x:Key="LighterColorConverter" Nuance="32" />
 
         <Storyboard x:Key="AnimationStoryboard" RepeatBehavior="Forever">
