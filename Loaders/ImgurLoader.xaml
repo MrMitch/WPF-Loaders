@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
              xmlns:converters="clr-namespace:Loaders.Converters"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              mc:Ignorable="d" 
              x:Name="RootUserControl"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -14,6 +16,95 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </UserControl.Style>
+    <UserControl.Resources>
+        <Storyboard x:Key="AnimationStoryboard" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring5" 
+                                           Storyboard.TargetProperty="StartAngle"
+                                           BeginTime="0:0:0.3">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring5" 
+                                           Storyboard.TargetProperty="EndAngle"
+                                           BeginTime="0:0:1.3">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="360">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <SineEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring4" 
+                                           Storyboard.TargetProperty="StartAngle"
+                                           BeginTime="0:0:0.5">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring4" 
+                                           Storyboard.TargetProperty="EndAngle"
+                                           BeginTime="0:0:1.5">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="360">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <SineEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring3" 
+                                           Storyboard.TargetProperty="StartAngle"
+                                           BeginTime="0:0:0.7">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring3" 
+                                           Storyboard.TargetProperty="EndAngle"
+                                           BeginTime="0:0:1.7">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="360">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <SineEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring2" 
+                                           Storyboard.TargetProperty="StartAngle"
+                                           BeginTime="0:0:0.9">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring2" 
+                                           Storyboard.TargetProperty="EndAngle"
+                                           BeginTime="0:0:1.9">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="360">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <SineEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring1" 
+                                           Storyboard.TargetProperty="StartAngle"
+                                           BeginTime="0:0:1">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Ring1" 
+                                           Storyboard.TargetProperty="EndAngle"
+                                           BeginTime="0:0:2.1">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="360">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <SineEase EasingMode="EaseOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <i:Interaction.Triggers>
+        <ei:DataTrigger Binding="{Binding IsIndeterminate, ElementName=RootUserControl}" Value="True">
+            <ei:ControlStoryboardAction Storyboard="{StaticResource AnimationStoryboard}" ControlStoryboardOption="Play" />
+        </ei:DataTrigger>
+
+        <ei:DataTrigger Binding="{Binding IsIndeterminate, ElementName=RootUserControl}" Value="False">
+            <ei:ControlStoryboardAction Storyboard="{StaticResource AnimationStoryboard}" ControlStoryboardOption="Stop" />
+        </ei:DataTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
         <Grid.Resources>
             <Style TargetType="ed:Arc">
@@ -22,6 +113,9 @@
                 <Setter Property="EndAngle" Value="0" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="ArcThickness" Value="{Binding RingsThickness, ElementName=RootUserControl}" />
+                <Setter Property="ArcThicknessUnit" Value="Pixel" />
+                <Setter Property="Fill" Value="{Binding Foreground, ElementName=RootUserControl}" />
             </Style>
 
             <converters:LinearConverter x:Key="Ring1Converter" A="5"/>
@@ -32,172 +126,27 @@
         </Grid.Resources>
 
         <ed:Arc x:Name="Ring5"
-                Fill="{Binding RingsBrush, ElementName=RootUserControl}"
                 Height="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring5Converter}}"
-                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring5Converter}}"
-                ArcThickness="{Binding RingsThickness, ElementName=RootUserControl}"
-                ArcThicknessUnit="Pixel">
-            <ed:Arc.Triggers>
-                <EventTrigger RoutedEvent="ed:Arc.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="StartAngle"
-                                                           BeginTime="0:0:0.3">
-                                <EasingDoubleKeyFrame Value="0"
-                                                      KeyTime="0:0:1">
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="EndAngle"
-                                                           BeginTime="0:0:1.3">
-                                <EasingDoubleKeyFrame Value="360"
-                                                      KeyTime="0:0:1">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <SineEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ed:Arc.Triggers>
-        </ed:Arc>
-
+                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring5Converter}}" />
 
         <ed:Arc x:Name="Ring4" 
-                Fill="{Binding RingsBrush, ElementName=RootUserControl}"
                 Height="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring4Converter}}"
-                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring4Converter}}"
-                ArcThickness="{Binding RingsThickness, ElementName=RootUserControl}"
-                ArcThicknessUnit="Pixel" >
-            <ed:Arc.Triggers>
-                <EventTrigger RoutedEvent="ed:Arc.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="StartAngle"
-                                                           BeginTime="0:0:0.5">
-                                <EasingDoubleKeyFrame Value="0"
-                                                      KeyTime="0:0:0.8">
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="EndAngle"
-                                                           BeginTime="0:0:1.5">
-                                <EasingDoubleKeyFrame Value="360"
-                                                      KeyTime="0:0:0.8">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <SineEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ed:Arc.Triggers>
-        </ed:Arc>
+                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring4Converter}}" />
 
         <ed:Arc x:Name="Ring3" 
-                Fill="{Binding RingsBrush, ElementName=RootUserControl}"
                 Height="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring3Converter}}"
-                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring3Converter}}"
-                ArcThickness="{Binding RingsThickness, ElementName=RootUserControl}"
-                ArcThicknessUnit="Pixel" >
-            <ed:Arc.Triggers>
-                <EventTrigger RoutedEvent="ed:Arc.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="StartAngle"
-                                                           BeginTime="0:0:0.7">
-                                <EasingDoubleKeyFrame Value="0"
-                                                      KeyTime="0:0:0.6">
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="EndAngle"
-                                                           BeginTime="0:0:1.7">
-                                <EasingDoubleKeyFrame Value="360"
-                                                      KeyTime="0:0:0.6">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <SineEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ed:Arc.Triggers>
-        </ed:Arc>
+                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring3Converter}}" />
 
         <ed:Arc x:Name="Ring2" 
-                Fill="{Binding RingsBrush, ElementName=RootUserControl}"
                 Height="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring2Converter}}"
-                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring2Converter}}"
-                ArcThickness="{Binding RingsThickness, ElementName=RootUserControl}"
-                ArcThicknessUnit="Pixel" >
-            <ed:Arc.Triggers>
-                <EventTrigger RoutedEvent="ed:Arc.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="StartAngle"
-                                                           BeginTime="0:0:0.9">
-                                <EasingDoubleKeyFrame Value="0"
-                                                      KeyTime="0:0:0.4">
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="EndAngle"
-                                                           BeginTime="0:0:1.9">
-                                <EasingDoubleKeyFrame Value="360"
-                                                      KeyTime="0:0:0.4">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <SineEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ed:Arc.Triggers>
-        </ed:Arc>
+                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring2Converter}}" />
 
         <ed:Arc x:Name="Ring1" 
-                Fill="{Binding RingsBrush, ElementName=RootUserControl}"
                 Height="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring1Converter}}"
-                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring1Converter}}"
-                ArcThickness="{Binding RingsThickness, ElementName=RootUserControl}"
-                ArcThicknessUnit="Pixel">
-            <ed:Arc.Triggers>
-                <EventTrigger RoutedEvent="ed:Arc.Loaded">
-                    <BeginStoryboard>
-                        <Storyboard RepeatBehavior="Forever">
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="StartAngle"
-                                                           BeginTime="0:0:1">
-                                <EasingDoubleKeyFrame Value="0"
-                                                      KeyTime="0:0:0.2">
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="EndAngle"
-                                                           BeginTime="0:0:2.1">
-                                <EasingDoubleKeyFrame Value="360"
-                                                      KeyTime="0:0:0.2">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <SineEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ed:Arc.Triggers>
-        </ed:Arc>
+                Width="{Binding RingsThickness, ElementName=RootUserControl, Converter={StaticResource Ring1Converter}}" />
 
         <Ellipse Width="{Binding RingsThickness, ElementName=RootUserControl}" 
                  Height="{Binding RingsThickness, ElementName=RootUserControl}"
-                 Fill="{Binding RingsBrush, ElementName=RootUserControl}"/>
+                 Fill="{Binding Foreground, ElementName=RootUserControl}"/>
     </Grid>
 </UserControl>

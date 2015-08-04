@@ -1,15 +1,29 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Loaders
 {
     /// <summary>
-    /// A Google+ inspired loader
+    /// Google+ inspired loader
     /// </summary>
     public partial class GooglePlusLoader : UserControl
     {
+        #region IsIndeterminate
+        public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register(
+            "IsIndeterminate",
+            typeof (bool),
+            typeof (GooglePlusLoader),
+            new PropertyMetadata(default(bool))
+            );
+
+        public bool IsIndeterminate
+        {
+            get { return (bool) GetValue(IsIndeterminateProperty); }
+            set { SetValue(IsIndeterminateProperty, value); }
+        }
+        #endregion
+
         #region Color1
         public static readonly DependencyProperty Color1Property = DependencyProperty.Register(
             "Color1",
@@ -68,8 +82,9 @@ namespace Loaders
         {
             get { return (Color)GetValue(Color4Property); }
             set { SetValue(Color4Property, value); }
-        } 
+        }
         #endregion
+
 
         public GooglePlusLoader()
         {

@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Loaders"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Loaders" 
         Height="800" Width="800">
@@ -48,14 +47,22 @@
                         Minimum="0" 
                         Maximum="{Binding ActualWidth, ElementName=ChromeSettingsGrid}" 
                         Value="70" />
+
+                <TextBlock Text="IsLoading"
+                           Grid.Row="2" Grid.Column="0"/>
+                <CheckBox IsThreeState="False"
+                          IsChecked="True"
+                          x:Name="ChromeLoadingCheckBox"
+                          Grid.Row="2" Grid.Column="1"/>
             </Grid>
 
             <local:ChromeLoader x:Name="Loader"
                                 Height="{Binding Value, ElementName=ChromeSizeSlider}"
                                 Width="{Binding Value, ElementName=ChromeSizeSlider}"
                                 Thickness="{Binding Value, ElementName=ChromeThicknessSlider}"
+                                IsIndeterminate="{Binding IsChecked, ElementName=ChromeLoadingCheckBox}"
                                 Margin="20"
-                                Brush="#007acc"/>
+                                Foreground="#007acc"/>
 
 
             <TextBlock Text="Imgur image loader" Style="{StaticResource HeaderTextBlockStyle}" />
@@ -79,13 +86,21 @@
                         Minimum="1" Maximum="100"
                         TickFrequency="0.2"
                         Value="4" />
+
+                <TextBlock Text="IsLoading"
+                           Grid.Row="2" Grid.Column="0"/>
+                <CheckBox IsThreeState="False"
+                          IsChecked="True"
+                          x:Name="ImgurLoadingCheckBox"
+                          Grid.Row="2" Grid.Column="1"/>
             </Grid>
 
             <Border Background="#181818"
                     Padding="30"
                     Margin="0,10">
-                <local:ImgurLoader RingsThickness="{Binding Value, ElementName=ImgurRingsThicknessSlider}"
-                                   RingsBrush="White"/>
+                <local:ImgurLoader IsIndeterminate="{Binding IsChecked, ElementName=ImgurLoadingCheckBox}" 
+                                   RingsThickness="{Binding Value, ElementName=ImgurRingsThicknessSlider}"
+                                   Foreground="White"/>
 
             </Border>
 
@@ -111,12 +126,19 @@
                         Minimum="1" Maximum="{Binding ActualWidth, ElementName=GooglePlusSettingsGrid}"
                         TickFrequency="0.2"
                         Value="50" />
+                <TextBlock Text="IsLoading"
+                           Grid.Row="2" Grid.Column="0"/>
+                <CheckBox IsThreeState="False"
+                          IsChecked="True"
+                          x:Name="GooglePlusLoadingCheckBox"
+                          Grid.Row="2" Grid.Column="1"/>
             </Grid>
 
             <Border Background="#e5e5e5"
                     Margin="10"
                     Padding="20">
                 <local:GooglePlusLoader x:Name="GooglePlusLoader" 
+                                        IsIndeterminate="{Binding IsChecked, ElementName=GooglePlusLoadingCheckBox}"
                                         Height="{Binding Value, ElementName=GooglePlusSizeSlider}"
                                         Width="{Binding Value, ElementName=GooglePlusSizeSlider}" />
             </Border>
