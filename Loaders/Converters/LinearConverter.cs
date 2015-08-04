@@ -8,7 +8,7 @@ namespace Loaders.Converters
     /// Applies a linear function to the value passed as a parameter.
     /// f(x) = a*x + b
     /// </summary>
-    public class LinearConverter : IValueConverter
+    internal class LinearConverter : IValueConverter
     {
         public double A { get; set; } = 1;
         public double B { get; set; } = 0;

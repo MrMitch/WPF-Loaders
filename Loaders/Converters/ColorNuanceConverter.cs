@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace Loaders.Converters
 {
-    public class ColorNuanceConverter : IValueConverter
+    internal class ColorNuanceConverter : IValueConverter
     {
         public int Nuance { get; set; }
 
