@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LoadersDemo"
         xmlns:loaders="clr-namespace:Loaders;assembly=Loaders"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         d:DesignHeight="660"
         Title="MainWindow" Height="660" Width="525">
@@ -29,55 +30,61 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Column="0" Grid.Row="0">
-                    Thickness : <Run Text="{Binding Value,StringFormat='P2', ElementName=ChromeThicknessSlider}" />
+                    Thickness : <Run Text="{Binding Value, StringFormat='F2', ElementName=ChromeThicknessSlider}" />
                 </TextBlock>
                 <Slider x:Name="ChromeThicknessSlider" 
                         Grid.Row="0" Grid.Column="1"
-                        Minimum="0" Maximum="1"
-                        Value="0.10" />
+                        Minimum="0.01" Maximum="100"
+                        Value="2" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0">
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Thickness unit : " />
+                <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0"
+                          x:Name="ThicknessUnitComboBox">
+                    <system:String>Pixel</system:String>
+                    <system:String>Percent</system:String>
+                </ComboBox>
+
+                <TextBlock Grid.Row="2" Grid.Column="0">
                     Size : <Run Text="{Binding Value, StringFormat='F0', ElementName=ChromeSizeSlider}" />
                 </TextBlock>
-                <Slider Grid.Row="1" Grid.Column="1" 
+                <Slider Grid.Row="2" Grid.Column="1" 
                         x:Name="ChromeSizeSlider"
                         Minimum="0" 
                         Maximum="{Binding ActualWidth, ElementName=ChromeSettingsGrid}" 
-                        Value="70" />
+                        Value="40" />
 
-                <TextBlock Text="Loading : " Grid.Row="2" Grid.Column="0"/>
+                <TextBlock Text="Loading : " Grid.Row="3" Grid.Column="0"/>
                 <CheckBox IsThreeState="False"
                           IsChecked="True"
                           x:Name="ChromeLoadingCheckBox"
-                          Grid.Row="2" Grid.Column="1"/>
+                          Grid.Row="3" Grid.Column="1"/>
             </Grid>
 
             <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <loaders:ChromeLoader Height="{Binding Value, ElementName=ChromeSizeSlider}"
-                                      Width="{Binding Value, ElementName=ChromeSizeSlider}"
-                                      Thickness="{Binding Value, ElementName=ChromeThicknessSlider}"
-                                      IsIndeterminate="{Binding IsChecked, ElementName=ChromeLoadingCheckBox}"
-                                      Margin="20"
-                                      Foreground="Orange" />
+                <WrapPanel.Resources>
+                    <Style TargetType="loaders:ChromeLoader">
+                        <Setter Property="Margin" Value="20" />
+                        <Setter Property="ThicknessUnit" Value="{Binding SelectedItem, ElementName=ThicknessUnitComboBox}" />
+                        <Setter Property="Thickness" Value="{Binding Value, ElementName=ChromeThicknessSlider}" />
+                        <Setter Property="IsIndeterminate" Value="{Binding IsChecked, ElementName=ChromeLoadingCheckBox}" />
+                        <Setter Property="Width" Value="{Binding Value, ElementName=ChromeSizeSlider}" />
+                        <Setter Property="Height" Value="{Binding Value, ElementName=ChromeSizeSlider}" />
+                    </Style>
+                </WrapPanel.Resources>
 
-                <loaders:ChromeLoader Height="{Binding Value, ElementName=ChromeSizeSlider}"
-                                      Width="{Binding Value, ElementName=ChromeSizeSlider}"
-                                      Thickness="{Binding Value, ElementName=ChromeThicknessSlider}"
-                                      IsIndeterminate="{Binding IsChecked, ElementName=ChromeLoadingCheckBox}"
-                                      Margin="20"
-                                      Foreground="#007acc" />
+                <loaders:ChromeLoader />
 
-                <loaders:ChromeLoader Height="{Binding Value, ElementName=ChromeSizeSlider}"
-                                      Width="{Binding Value, ElementName=ChromeSizeSlider}"
-                                      Thickness="{Binding Value, ElementName=ChromeThicknessSlider}"
-                                      IsIndeterminate="{Binding IsChecked, ElementName=ChromeLoadingCheckBox}"
-                                      Margin="20"
-                                      Foreground="DarkGray" />
+                <loaders:ChromeLoader Foreground="Orange" />
+
+                <loaders:ChromeLoader Foreground="DarkGray"
+                                      Fill="#11000000"/>
+
+
             </WrapPanel>
-
 
             <TextBlock Text="Imgur image loader" Style="{StaticResource HeaderTextBlockStyle}" />
             <Grid x:Name="ImgurSettingsGrid">
@@ -111,20 +118,19 @@
             <Border Background="#181818"
                     Margin="0,10">
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <loaders:ImgurLoader Margin="20" 
-                                         IsIndeterminate="{Binding IsChecked, ElementName=ImgurLoadingCheckBox}"
-                                         RingsThickness="{Binding Value, ElementName=ImgurRingsThicknessSlider}"
-                                         Foreground="ForestGreen" />
+                    <WrapPanel.Resources>
+                        <Style TargetType="loaders:ImgurLoader">
+                            <Setter Property="Margin" Value="20" />
+                            <Setter Property="IsIndeterminate" Value="{Binding IsChecked, ElementName=ImgurLoadingCheckBox}" />
+                            <Setter Property="RingsThickness" Value="{Binding Value, ElementName=ImgurRingsThicknessSlider}" />
+                        </Style>
+                    </WrapPanel.Resources>
+                    
+                    <loaders:ImgurLoader />
 
-                    <loaders:ImgurLoader Margin="20" 
-                                         IsIndeterminate="{Binding IsChecked, ElementName=ImgurLoadingCheckBox}"
-                                         RingsThickness="{Binding Value, ElementName=ImgurRingsThicknessSlider}"
-                                         Foreground="White" />
+                    <loaders:ImgurLoader Foreground="ForestGreen" />
 
-                    <loaders:ImgurLoader Margin="20" 
-                                         IsIndeterminate="{Binding IsChecked, ElementName=ImgurLoadingCheckBox}"
-                                         RingsThickness="{Binding Value, ElementName=ImgurRingsThicknessSlider}"
-                                         Foreground="#CACACA" />
+                    <loaders:ImgurLoader Foreground="#CACACACA" />
                 </WrapPanel>
 
             </Border>
