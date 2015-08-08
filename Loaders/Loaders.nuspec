@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MrMitch.Loaders</id>
-    <version>1.0.0.2</version>
+    <version>1.1.0.0</version>
     <title>Animated loaders for WPF</title>
     <authors>Mickael GOETZ</authors>
     <owners>Mickael GOETZ</owners>
@@ -11,7 +11,7 @@
     <!-- <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl> -->
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>A set of animated loader for your WPF projects.</description>
-    <releaseNotes>Fix references</releaseNotes>
+    <releaseNotes>Allow to override the style of ImgurLoader and ChromeLoader</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>WPF Loaders Animations Loading Progress</tags>
     <frameworkAssemblies>
