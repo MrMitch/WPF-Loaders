@@ -126,13 +126,6 @@
     <RemoveDir Directories="NuGetReleases" />
     <MakeDir Directories="NuGetReleases" />
     <!-- Package the project -->
-    <Exec WorkingDirectory="$(BuildDir)" Command="nuget\nuget.exe pack -Verbosity detailed -Symbols -OutputDir &quot;NuGetReleases&quot; -Version %(OutputAssemblyInfo.Version) -Properties &quot;Configuration=$(Configuration)&quot;" />
+    <Exec WorkingDirectory="$(BuildDir)" Command="..\nuget.exe pack -Verbosity detailed -Symbols -OutputDir &quot;NuGetReleases&quot; -Version %(OutputAssemblyInfo.Version) -Properties &quot;Configuration=$(Configuration)&quot;" />
   </Target>
-  <!--<Target Name="Publish">
-    -->
-  <!-- Publish the nupkg to the server by simply copying it to the correct location. -->
-  <!--
-    <Copy SourceFiles="$(PackageDir)\$(AssemblyName).%(OutputAssemblyInfo.Version).nupkg;$(PackageDir)\$(AssemblyName).%(OutputAssemblyInfo.Version).symbols.nupkg" 
-          DestinationFolder="\\server\path\to\nuget\package" />
-  </Target>-->
 </Project>
