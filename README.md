@@ -3,7 +3,8 @@
 A collection of animated loaders to use in WPF projects.
 You know, for fun, 'cause I'm bored sometimes.
 
-**Available on [NuGet](https://www.nuget.org/packages/MrMitch.Loaders/) !**
+**Available on [NuGet](https://www.nuget.org/packages/MrMitch.Loaders/) !**     
+![last version](https://img.shields.io/nuget/v/MrMitch.Loaders.png)
 
 ```ps1
 PM> Install-Package MrMitch.Loaders
