@@ -212,5 +212,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 Thumbs.db 
 */Thumbs.db  
-Loaders/nuget*
-
+MrMitch.Loaders/NuGet*
