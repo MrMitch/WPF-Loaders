@@ -109,6 +109,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <!-- http://brian-federici.com/blog/2013/4/17/automatically-target-multiple-frameworks-in-your-nuget-package -->
   <Target Name="AfterBuild">
     <!-- Load up the information from the assembly -->
     <GetAssemblyIdentity AssemblyFiles="$(OutputPath)$(AssemblyName).dll">
